@@ -7,13 +7,23 @@ var app = express();
 //     res.send('Hello Express');
 //   });
 
-absolutelyPath = __dirname + "views/index.html";
+absolutelyPath = __dirname + "/views/index.html";
 
-app.get("/", function(req, res) {
-        res.sendFile(absolutelyPath);
-      });
+// Normal usage
+// app.use(express.static(__dirname + "/public"));
 
+// Assets at the /public route
+app.use("/public", express.static(__dirname + "/public"));
+// app.get("/", function(req, res) {
+//         res.sendFile(absolutelyPath);
+//       });
 
+app.get("/json", function(req, res) {
+    if(process.env.MESSAGE_STYLE === "uppercase")
+        res.json({"message": "HELLO JSON"})
+    else
+        res.json({"message": "Hello json"})
+})
 
 
 
