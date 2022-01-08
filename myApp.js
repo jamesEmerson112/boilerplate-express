@@ -1,5 +1,7 @@
 const { response } = require('express');
 var express = require('express');
+var bodyParser = require('body-parser')
+
 var app = express();
 
 // console.log("Hello World")
@@ -7,6 +9,9 @@ var app = express();
 // app.get("/", function(req, res) {
 //     res.send('Hello Express');
 //   });
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extend: false }));
 
 absolutelyPath = __dirname + "/views/index.html";
 app.use(function middlewareLogger(req, res, next){
@@ -54,7 +59,15 @@ app.get("/:word/echo", function(req,res){
 //     });
 //   });
 
-
+app.get("/name", function(req, res, next){
+    var firstName = req.query.first;
+    var lastName = req.query.last;
+    // var {first: firstName, last:lastName} = req.query;
+    res.json({
+        name: `${firstName} ${lastName}`
+    });
+    console.log(`${firstName} ${lastName}`)
+});
 
 
 
